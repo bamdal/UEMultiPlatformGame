@@ -13,6 +13,8 @@ UCLASS()
 class PLATFORM_API AJMS_OutPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+	AJMS_OutPlayerController();
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Widget)
 	TSubclassOf<class UUserWidget> MainMenuClass;
