@@ -76,9 +76,10 @@ DerivedDataCache/*
 # 수업용 추가 무시
 Intermediate/*
 Saved/*
-!Content/
 Content/*
-!Content/BP/**.uasset
+!Content/
+!Content/BP/
+!Content/BP/**
 Build/*
 Plugins/*
 

@@ -14,18 +14,22 @@ class PLATFORM_API AJMS_PlatformPlayerState : public APlayerState
 {
 	GENERATED_BODY()
 	
-	
-protected:
-	
-	UPROPERTY(Replicated,BlueprintReadOnly)
-	int32 Pickups;
+
 	
 public:
-	void AddPickup()
-	{
-		Pickups++;
-		GEngine->AddOnScreenDebugMessage(-1,3.0f,FColor::Red,FString::Printf(TEXT("%s : %s Pickups: %d"),*this->GetName(),*GetOwner()->GetName(),Pickups));
-	};
 
-	int32 GetPickups() const {return Pickups;};
+	UPROPERTY(BlueprintReadWrite,Replicated,Category=Appearance)
+	int32 PlayerColorID = 0;
+
+	UPROPERTY(BlueprintReadWrite,Replicated,Category=Appearance)
+	bool InitAppearance = false;
+
+	// null이면 시작지점 스폰, 또는 체크포인트 지점 tag에서 생성
+	UPROPERTY(BlueprintReadWrite,Replicated,Category=CheckPoint)
+	FName CheckPointTag;
+
+protected:
+	virtual void BeginPlay() override;
+
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 };
