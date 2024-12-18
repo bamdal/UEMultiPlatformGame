@@ -3,6 +3,7 @@
 
 #include "JMS_PlatformCharacter.h"
 
+#include "EnhancedInputComponent.h"
 #include "JMS_PlatformAnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -81,6 +82,7 @@ void AJMS_PlatformCharacter::FellOutOfWorld(const class UDamageType& dmgType)
 {
 	//Super::FellOutOfWorld(dmgType);
 
+	if (0)
 	if (HasAuthority() || GetLocalRole() == ROLE_None)
 	{
 		GetCapsuleComponent()->SetSimulatePhysics(true);
@@ -88,6 +90,17 @@ void AJMS_PlatformCharacter::FellOutOfWorld(const class UDamageType& dmgType)
 		GetCameraBoom()->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 
 		LookAtTarget();
+	}
+}
+
+void AJMS_PlatformCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		EnhancedInputComponent->BindAction(IA_Pause,ETriggerEvent::Triggered,this,&ThisClass::Pause);
+
 	}
 }
 
@@ -105,14 +118,18 @@ void AJMS_PlatformCharacter::LookAtTarget()
 	if (ElapsedTime >= TimerDuration)
 	{
 		AController* BackupController = Controller;
-		Destroy();
+		//Destroy();
 		AGameMode* MyGameMode = GetWorld()->GetAuthGameMode<AGameMode>();
 		if(MyGameMode)
 		{
 
 
-			MyGameMode->RestartPlayer(BackupController);
+			//MyGameMode->RestartPlayer(BackupController);
 		
 		}
 	}
+}
+
+void AJMS_PlatformCharacter::Pause(const FInputActionValue& Value)
+{
 }

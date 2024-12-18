@@ -18,6 +18,9 @@ public:
 	AJMS_PlatformCharacter();
 	virtual void PostInitializeComponents() override;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* IA_Pause;
+
 private:
 
 	float TimerDuration = 5.0f; // 타이머 지속 시간
@@ -27,6 +30,8 @@ public:
 	UFUNCTION()
 	void UpdateSmoothingCamera(float DeltaTime);
 
+	UFUNCTION()
+	void Pause(const FInputActionValue& Value);
 protected:
 	virtual void BeginPlay() override;
 
@@ -35,6 +40,8 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
+
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 public:
 

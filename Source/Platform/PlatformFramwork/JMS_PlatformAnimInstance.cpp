@@ -46,6 +46,7 @@ void UJMS_PlatformAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		CalcLean(DeltaSeconds);
 		
 		IsMovementInput = Owner->GetLastMovementInputVector().Length() > 0;
+		
 	}
 }
 
