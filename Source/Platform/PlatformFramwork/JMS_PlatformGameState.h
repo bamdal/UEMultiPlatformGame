@@ -15,9 +15,37 @@ class PLATFORM_API AJMS_PlatformGameState : public AGameState
 	GENERATED_BODY()
 
 
-protected:
+public:
+	
+	UPROPERTY(BlueprintReadWrite,ReplicatedUsing = OnRep_RoundCountDown,Category="Round")
+	int32 RoundCountDown = 0;
 
+	UPROPERTY(BlueprintReadWrite,ReplicatedUsing = OnRep_IsRoundEnded,Category="Round")
+	bool IsRoundEnded = false;
+	
+	UPROPERTY(BlueprintReadWrite,ReplicatedUsing = OnRep_WinnerRef)
+	APlayerStart* WinnerRef;
+
+	FTimerHandle CountdownTimerHandle;
+	
+protected:
+	
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
+	UFUNCTION()
+	virtual void OnRep_RoundCountDown();
+
+	UFUNCTION()
+	virtual void OnRep_IsRoundEnded();
+
+	UFUNCTION()
+	virtual void OnRep_WinnerRef();
+
+	void CountDownProc();
+	
 
 
 

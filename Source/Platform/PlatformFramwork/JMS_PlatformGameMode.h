@@ -6,6 +6,11 @@
 #include "GameFramework/GameMode.h"
 #include "JMS_PlatformGameMode.generated.h"
 
+namespace EDrawDebugTrace
+{
+	enum Type : int;
+}
+
 class AJMS_PlatformPlayerState;
 class AJMS_PlatformGameState;
 /**
@@ -19,12 +24,18 @@ class PLATFORM_API AJMS_PlatformGameMode : public AGameMode
 
 	AJMS_PlatformGameMode();
 
-protected:
-	UPROPERTY()
-	AJMS_PlatformGameState* CoinGameState;
+public:
+	UPROPERTY(BlueprintReadWrite)
+	TArray<APlayerController*> AllPlayerControllers;
 
-protected:
-	virtual void BeginPlay() override;
+public:
+	virtual void PostLogin(APlayerController* NewPlayer) override;
+	virtual void Logout(AController* Exiting) override;
+	virtual void SwapPlayerControllers(APlayerController* OldPC, APlayerController* NewPC) override;
+
+public:
+	/*void EnableCharacterMovement();*/
+
 
 
 };
