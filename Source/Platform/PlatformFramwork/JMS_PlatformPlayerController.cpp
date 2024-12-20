@@ -4,6 +4,14 @@
 #include "JMS_PlatformPlayerController.h"
 
 
+void AJMS_PlatformPlayerController::ReadyGo_Implementation()
+{
+}
+
+void AJMS_PlatformPlayerController::MatchOver_Implementation()
+{
+}
+
 void AJMS_PlatformPlayerController::BeginPlay()
 {
 	Super::BeginPlay();

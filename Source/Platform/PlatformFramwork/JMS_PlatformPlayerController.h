@@ -13,7 +13,15 @@ UCLASS()
 class PLATFORM_API AJMS_PlatformPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ReadyGo();
+
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void MatchOver();
+
 	
 
 

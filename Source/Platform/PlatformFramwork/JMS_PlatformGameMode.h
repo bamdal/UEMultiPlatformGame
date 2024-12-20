@@ -33,9 +33,10 @@ public:
 	virtual void Logout(AController* Exiting) override;
 	virtual void SwapPlayerControllers(APlayerController* OldPC, APlayerController* NewPC) override;
 
-public:
-	/*void EnableCharacterMovement();*/
 
+public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void EnableCharacterMovement();
 
 
 };

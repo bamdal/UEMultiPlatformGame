@@ -256,22 +256,22 @@
   <component name="ChangeListManager">
     <list default="true" id="facf4823-6854-4eaa-b1d5-644f2c30dbde" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Platform.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Platform.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/Char/BP_JMS_PlatformCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Char/BP_JMS_PlatformCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/BP/Char/BP_JMS_PlatformGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Char/BP_JMS_PlatformGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Char/BP_JMS_PlatformGameState.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Char/BP_JMS_PlatformGameState.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/BP/Char/BP_JMS_PlatformPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Char/BP_JMS_PlatformPlayerController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/Core/BP_FL_General.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Core/BP_FL_General.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/Frame/BP_BouncePad.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Frame/BP_BouncePad.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/Frame/BP_CheckPoint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Frame/BP_CheckPoint.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/UI/WBP_Basic_Button.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/UI/WBP_Basic_Button.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/UI/WBP_GameMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/UI/WBP_GameMenu.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/UI/WBP_MainMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/UI/WBP_MainMenu.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/UI/WBP_Popup.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/UI/WBP_Popup.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Frame/BP_Tropy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Frame/BP_Tropy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/UI/Copy/WBP_Announcement_Popup1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/UI/Copy/WBP_Announcement_Popup1.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Platform.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/Platform.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Platform/Core/JMS_BlueprintFunctionLibrary.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Platform/Core/JMS_BlueprintFunctionLibrary.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Platform/Platform.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Platform/Platform.Build.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameMode.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameMode.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameMode.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameState.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformPlayerController.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -333,16 +333,16 @@
     <setting file="file://C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/include/atomic" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Platform/Character/JMSCharBase.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Platform/Character/JMSCharBase.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Platform/JMS_PlatformGI.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Platform/JMS_PlatformGI.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Platform/OutPlatformFramwork/JMS_OutGameMode.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Platform/OutPlatformFramwork/JMS_OutGameMode.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Platform/OutPlatformFramwork/JMS_OutPlayerController.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Platform/OutPlatformFramwork/JMS_OutPlayerController.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Platform/OutPlatformFramwork/JMS_OutPlayerController.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Platform/OutPlatformFramwork/JMS_OutPlayerController.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformAnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformAnimInstance.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformCharacter.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameMode.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Platform/PlatformFramwork/JMS_PlatformGameMode.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -29094,6 +29094,7 @@
       <workItem from="1734571240558" duration="1237000" />
       <workItem from="1734586934906" duration="598000" />
       <workItem from="1734594559290" duration="1975000" />
+      <workItem from="1734654054766" duration="1194000" />
     </task>
     <servers />
   </component>

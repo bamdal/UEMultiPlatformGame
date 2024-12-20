@@ -20,7 +20,7 @@ bool UJMS_BlueprintFunctionLibrary::IsActiveError(const UObject* WorldContextObj
 	{
 		return true;	// 둘중에 하나라도 뭔가 있다면 에러
 	}
-	check(nullptr);
+	//check(nullptr);
 
 	return false;	// 이상 없음
 }

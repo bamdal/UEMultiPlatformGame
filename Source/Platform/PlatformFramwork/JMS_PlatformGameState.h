@@ -24,7 +24,14 @@ public:
 	bool IsRoundEnded = false;
 	
 	UPROPERTY(BlueprintReadWrite,ReplicatedUsing = OnRep_WinnerRef)
-	APlayerStart* WinnerRef;
+	APlayerState* WinnerRef;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sound")
+	TObjectPtr<USoundBase> SB_Countdown;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sound")
+	TObjectPtr<USoundBase> SB_CountdownFinal;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sound")
+	TObjectPtr<USoundBase> SB_RefereeWhistle;
 
 	FTimerHandle CountdownTimerHandle;
 	
@@ -43,12 +50,16 @@ protected:
 
 	UFUNCTION()
 	virtual void OnRep_WinnerRef();
-
-	void CountDownProc();
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetWinnerRef(APlayerState* Winner);
 	
-
-
-
-
-
+	UFUNCTION()
+	void StartRound();
+	UFUNCTION()
+	void CountDownProc();
+	UFUNCTION()
+	void PlayCountdownSound();
+	UFUNCTION()
+	void PlayReadyGoAnimation();
 };

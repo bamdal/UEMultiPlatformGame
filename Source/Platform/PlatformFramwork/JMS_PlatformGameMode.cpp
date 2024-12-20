@@ -48,6 +48,10 @@ void AJMS_PlatformGameMode::SwapPlayerControllers(APlayerController* OldPC, APla
 	}
 }
 
+void AJMS_PlatformGameMode::EnableCharacterMovement_Implementation()
+{
+}
+
 /*
 void AJMS_PlatformGameMode::EnableCharacterMovement()
 {
