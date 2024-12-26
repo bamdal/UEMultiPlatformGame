@@ -12,13 +12,19 @@
 void AJMS_PlatformGameState::BeginPlay()
 {
 	Super::BeginPlay();
-	SetGamePlayTypes(EJMS_GamePlay::GameInit);
 	
 	
 	// 서버만 카운트 다운 시작
 	if (HasAuthority())
 	{
 		ServerCountDownProc();
+		NM_SetGamePlayTypes(EJMS_GamePlay::GameInit);
+
+	}
+	
+	if (GamePlayTypes == EJMS_GamePlay::None)
+	{
+		GamePlayTypes =EJMS_GamePlay::GameInit;
 	}
 }
 
@@ -33,7 +39,6 @@ void AJMS_PlatformGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void AJMS_PlatformGameState::NM_RoundCountdown_Implementation(int32 Count)
 {
-	SetGamePlayTypes(EJMS_GamePlay::ReadyCountdown);
 	RoundCountDown = Count;
 	
 	// 카운트 다운 사운드 출력
@@ -46,7 +51,6 @@ void AJMS_PlatformGameState::NM_RoundCountdown_Implementation(int32 Count)
 void AJMS_PlatformGameState::NM_IsRoundEnded_Implementation(APlayerState* WinnerPS)
 {
 	WinnerRef = WinnerPS;
-	SetGamePlayTypes(EJMS_GamePlay::GameResult);
 	
 	
 	if (SB_RefereeWhistle)
@@ -67,7 +71,6 @@ void AJMS_PlatformGameState::ServerStartRound()
 	AJMS_PlatformGameMode* GM = Cast<AJMS_PlatformGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 	if (GM)
 	{
-		SetGamePlayTypes(EJMS_GamePlay::GamePlaying);
 		GM->EnableCharacterMovement();
 	}
 }
@@ -80,6 +83,8 @@ void AJMS_PlatformGameState::ServerPlayerWinner(APlayerState* WinnerPS)
 {
 	if (HasAuthority())
 	{
+		
+		NM_SetGamePlayTypes(EJMS_GamePlay::GameResult);
 		NM_IsRoundEnded(WinnerPS);
 	}
 
@@ -91,7 +96,7 @@ void AJMS_PlatformGameState::ServerPlayerWinner(APlayerState* WinnerPS)
 
 void AJMS_PlatformGameState::ServerCountDownProc()
 {
-	SetGamePlayTypes(EJMS_GamePlay::ReadyCountdown);
+	NM_SetGamePlayTypes(EJMS_GamePlay::ReadyCountdown);
 	//RoundCountDown = 0; // 이런 값들은 ini에서 값 가져와서 config 처리 해야함
 
 	auto CountDownDelegate = [this](/* 파라미터 값 */)
@@ -105,6 +110,8 @@ void AJMS_PlatformGameState::ServerCountDownProc()
 				// 게임시작
 				GetWorld()->GetTimerManager().ClearTimer(CountdownTimerHandle);
 				ServerStartRound();
+				NM_SetGamePlayTypes(EJMS_GamePlay::GamePlaying);
+
 				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "Round countdown started");
 			}
 		}
@@ -139,8 +146,10 @@ void AJMS_PlatformGameState::PlayReadyGoAnimation()
 	}
 }
 
-void AJMS_PlatformGameState::SetGamePlayTypes(EJMS_GamePlay GameType)
+void AJMS_PlatformGameState::NM_SetGamePlayTypes_Implementation(EJMS_GamePlay GameType)
 {
 	GamePlayTypes = GameType;
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan,FString::Printf(TEXT("Set Type %hhd"),GamePlayTypes));
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan,FString::Printf(TEXT("Set Type %s"), *StaticEnum<EJMS_GamePlay>()->GetNameByIndex(static_cast<uint8>(GamePlayTypes)).ToString() ));
+
 }
+

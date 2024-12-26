@@ -71,6 +71,6 @@ public:
 	UFUNCTION()
 	void PlayReadyGoAnimation();
 
-	UFUNCTION()
-	void SetGamePlayTypes(EJMS_GamePlay GameType);
+	UFUNCTION(NetMulticast,Reliable)
+	void NM_SetGamePlayTypes(EJMS_GamePlay GameType);
 };
