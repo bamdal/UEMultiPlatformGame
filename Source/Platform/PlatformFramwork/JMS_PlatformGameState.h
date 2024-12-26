@@ -6,6 +6,17 @@
 #include "GameFramework/GameState.h"
 #include "JMS_PlatformGameState.generated.h"
 
+// 게임의 진행상태를 나타내기위한 Enum값
+UENUM(BlueprintType)
+enum class EJMS_GamePlay : uint8
+{
+	None = 0,
+	GameInit,
+	ReadyCountdown,
+	GamePlaying,
+	GameResult,
+};
+
 /**
  * 
  */
@@ -17,14 +28,14 @@ class PLATFORM_API AJMS_PlatformGameState : public AGameState
 
 public:
 	
-	UPROPERTY(BlueprintReadWrite,ReplicatedUsing = OnRep_RoundCountDown,Category="Round")
+	UPROPERTY(BlueprintReadWrite,Category=Round)
 	int32 RoundCountDown = 0;
 
-	UPROPERTY(BlueprintReadWrite,ReplicatedUsing = OnRep_IsRoundEnded,Category="Round")
-	bool IsRoundEnded = false;
-	
-	UPROPERTY(BlueprintReadWrite,ReplicatedUsing = OnRep_WinnerRef)
+	UPROPERTY(BlueprintReadWrite,Category=GameEnd)
 	APlayerState* WinnerRef;
+
+	UPROPERTY(BlueprintReadWrite)
+	EJMS_GamePlay GamePlayTypes = EJMS_GamePlay::None;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sound")
 	TObjectPtr<USoundBase> SB_Countdown;
@@ -39,27 +50,27 @@ protected:
 	
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
-	UFUNCTION()
-	virtual void OnRep_RoundCountDown();
+	UFUNCTION(NetMulticast,Reliable)
+	void NM_RoundCountdown(int32 Count);
 
-	UFUNCTION()
-	virtual void OnRep_IsRoundEnded();
-
-	UFUNCTION()
-	virtual void OnRep_WinnerRef();
-public:
+	UFUNCTION(NetMulticast,Reliable)
+	void NM_IsRoundEnded(APlayerState* WinnerPS);
+	
 	UFUNCTION(BlueprintCallable)
-	void SetWinnerRef(APlayerState* Winner);
+	void ServerPlayerWinner(APlayerState* WinnerPS);
 	
+public:
+
 	UFUNCTION()
-	void StartRound();
+	void ServerStartRound();
 	UFUNCTION()
-	void CountDownProc();
+	void ServerCountDownProc();
 	UFUNCTION()
 	void PlayCountdownSound();
 	UFUNCTION()
 	void PlayReadyGoAnimation();
+
+	UFUNCTION()
+	void SetGamePlayTypes(EJMS_GamePlay GameType);
 };

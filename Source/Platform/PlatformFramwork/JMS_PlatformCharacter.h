@@ -3,12 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "OnlineSubsystem.h"
 #include "../Character/JMSCharBase.h"
+#include "Interfaces/OnlineSessionInterface.h"
 #include "JMS_PlatformCharacter.generated.h"
 
 /**
  * 
  */
+
 UCLASS()
 class PLATFORM_API AJMS_PlatformCharacter : public AJMSCharBase
 {
@@ -39,11 +42,30 @@ protected:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
 
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
-public:
 
-	void LookAtTarget();
+
+public:
+	// TSharedPtr<IOnlineSession, ESPMode::ThreadSafe>
+	IOnlineSessionPtr OnlineSessionInterface; // (스팀) 온라인 서브시스템 인터페이스
+
+protected:
+	// 클라가 세션을 생성하는 명령
+	UFUNCTION(BlueprintCallable)
+	void CreateGameSession();
+
+	UFUNCTION(BlueprintCallable)
+	void FindAndJoinGameSession();
+
+	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+	void OnFindSessionsComplete(bool bWasSuccessful);
+	void OnJoinSessionComplete(FName Name, EOnJoinSessionCompleteResult::Type Arg);
+	
+private:
+	FOnCreateSessionCompleteDelegate CreateSessionCompleteDelegate;
+	FOnFindSessionsCompleteDelegate FindSessionsCompleteDelegate;
+	TSharedPtr<FOnlineSessionSearch> SessionSearch;
+	FOnJoinSessionCompleteDelegate JoinSessionCompleteDelegate;
 };

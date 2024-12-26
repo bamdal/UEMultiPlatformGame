@@ -12,9 +12,13 @@
 void AJMS_PlatformGameState::BeginPlay()
 {
 	Super::BeginPlay();
+	SetGamePlayTypes(EJMS_GamePlay::GameInit);
+	
+	
+	// 서버만 카운트 다운 시작
 	if (HasAuthority())
 	{
-		GetWorld()->GetTimerManager().SetTimer(CountdownTimerHandle, this, &ThisClass::CountDownProc, 1.0f, true);
+		ServerCountDownProc();
 	}
 }
 
@@ -25,37 +29,26 @@ void AJMS_PlatformGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	GetWorld()->GetTimerManager().ClearTimer(CountdownTimerHandle);
 }
 
-void AJMS_PlatformGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+
+
+void AJMS_PlatformGameState::NM_RoundCountdown_Implementation(int32 Count)
 {
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(ThisClass, RoundCountDown);
-	DOREPLIFETIME(ThisClass, IsRoundEnded);
-	DOREPLIFETIME(ThisClass, WinnerRef);
-}
-
-
-void AJMS_PlatformGameState::OnRep_RoundCountDown()
-{
-	// 카운트 다운
-	// 레디고 애니메이션
+	SetGamePlayTypes(EJMS_GamePlay::ReadyCountdown);
+	RoundCountDown = Count;
+	
+	// 카운트 다운 사운드 출력
 	PlayCountdownSound();
+	// 레디고 애니메이션
 	PlayReadyGoAnimation();
-
-	if (HasAuthority())
-	{
-		if (RoundCountDown == 0)
-		{
-			// 게임시작
-			GetWorld()->GetTimerManager().ClearTimer(CountdownTimerHandle);
-			StartRound();
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "Round countdown started");
-		}
-	}
+	
 }
 
-void AJMS_PlatformGameState::OnRep_IsRoundEnded()
+void AJMS_PlatformGameState::NM_IsRoundEnded_Implementation(APlayerState* WinnerPS)
 {
+	WinnerRef = WinnerPS;
+	SetGamePlayTypes(EJMS_GamePlay::GameResult);
+	
+	
 	if (SB_RefereeWhistle)
 	{
 		UGameplayStatics::PlaySound2D(GetWorld(), SB_RefereeWhistle);
@@ -68,42 +61,57 @@ void AJMS_PlatformGameState::OnRep_IsRoundEnded()
 	}
 }
 
-void AJMS_PlatformGameState::OnRep_WinnerRef()
-{
-	if (HasAuthority())
-	{
-		IsRoundEnded = true;
-	}
-	OnRep_IsRoundEnded();
-}
-
-void AJMS_PlatformGameState::SetWinnerRef(APlayerState* Winner)
-{
-	WinnerRef = Winner;
-	if (HasAuthority())
-	{
-		OnRep_WinnerRef();
-	}
-}
-
-
 // 게임 시작 처리
-void AJMS_PlatformGameState::StartRound()
+void AJMS_PlatformGameState::ServerStartRound()
 {
 	AJMS_PlatformGameMode* GM = Cast<AJMS_PlatformGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 	if (GM)
 	{
+		SetGamePlayTypes(EJMS_GamePlay::GamePlaying);
 		GM->EnableCharacterMovement();
 	}
 }
 
-void AJMS_PlatformGameState::CountDownProc()
+
+
+
+
+void AJMS_PlatformGameState::ServerPlayerWinner(APlayerState* WinnerPS)
 {
 	if (HasAuthority())
 	{
-		--RoundCountDown;
-		OnRep_RoundCountDown();
+		NM_IsRoundEnded(WinnerPS);
 	}
+
+
+}
+
+
+
+
+void AJMS_PlatformGameState::ServerCountDownProc()
+{
+	SetGamePlayTypes(EJMS_GamePlay::ReadyCountdown);
+	//RoundCountDown = 0; // 이런 값들은 ini에서 값 가져와서 config 처리 해야함
+
+	auto CountDownDelegate = [this](/* 파라미터 값 */)
+	{
+		if (IsValid(this))
+		{
+			--RoundCountDown;	// 서버만 감소
+			NM_RoundCountdown(RoundCountDown);	// 감소한 값을 NetMulticast로 전송
+			if (RoundCountDown == 0)
+			{
+				// 게임시작
+				GetWorld()->GetTimerManager().ClearTimer(CountdownTimerHandle);
+				ServerStartRound();
+				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "Round countdown started");
+			}
+		}
+	};
+	
+	GetWorld()->GetTimerManager().SetTimer(CountdownTimerHandle, CountDownDelegate, 1.0f, true);
+	
 }
 
 void AJMS_PlatformGameState::PlayCountdownSound()
@@ -129,4 +137,10 @@ void AJMS_PlatformGameState::PlayReadyGoAnimation()
 			Controller->ReadyGo();
 		}
 	}
+}
+
+void AJMS_PlatformGameState::SetGamePlayTypes(EJMS_GamePlay GameType)
+{
+	GamePlayTypes = GameType;
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan,FString::Printf(TEXT("Set Type %hhd"),GamePlayTypes));
 }
